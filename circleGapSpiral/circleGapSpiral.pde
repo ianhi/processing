@@ -1,42 +1,58 @@
+//Author Ian Hunt-Isaak
+//ianhi.github.io
+//ianhuntisaak [atNOSPAM] gmail.com
+
+//=======================================
+// Change this variable to choose between a static image and animation
+boolean ANIMATION = true;
+//boolean ANIMATION = false;
+//========================================
+
+float reductionStart = .72;
+float reductionMultiplier = 1.08;
+float radInc = PI/10;
+float phaseShift=0;
+
 void setup(){
   size(800,800);
   background(0);
   stroke(255);
-  strokeWeight(5);
-  noFill();
+  strokeWeight(6);
   smooth();
-  float reduction = .72;
-  float reductionMultiplier = 1.08;
-  float radInc = PI/10;
-  println(year());
-  println(month());
-  println(day());
-  println(hour());
-  println(minute());
+  noFill();
+  if (!ANIMATION){
+    staticImage();
+    noLoop();
+  }
 
-//  arc(width/2, height/2, width/2, height/2, 0, 2*PI-radInc);
-//  arc(width/2, height/2, (width/2)/reduction, (height/2)/reduction, -radInc, 2*PI-2*radInc);
-//  reduction *=reduction;
-//  arc(width/2, height/2, (width/2)/reduction, (height/2)/reduction, -2*radInc, 2*PI-3*radInc);
+}
+void draw(){
+  background(0);
+  float reduction=reductionStart;
+  for(int i =0;i<20;i++){
+    arc(width/2,height/2,(width/2)/(reduction*reduction),(height/2)/(reduction*reduction), (-i*radInc+phaseShift), 2*PI-(i+1)*radInc-.2+phaseShift);
+    
+    //Below are several other styles of animation. They're ordered by which i like the best
+    
+    //arc(width/2,height/2,(width/2)/(reduction*reduction),(height/2)/(reduction*reduction), (-i*radInc-phaseShift)%TWO_PI, abs(2*PI-(i+1)*radInc-.2+phaseShift)%TWO_PI);
+    //arc(width/2,height/2,(width/2)/(reduction*reduction),(height/2)/(reduction*reduction), (-i*radInc+phaseShift)%TWO_PI, abs(2*PI-(i+1)*radInc-.2-phaseShift)%TWO_PI);
+    //arc(width/2,height/2,(width/2)/(reduction*reduction),(height/2)/(reduction*reduction), abs(-i*radInc+phaseShift), abs(2*PI-(i+1)*radInc-.2-phaseShift));
+  reduction*=reductionMultiplier;
+  }
+  phaseShift+=-.001*PI;
+}
+void keyPressed(){
+  if(key=='s'){
+    save("Outputs/gapSpiral"+year()+month()+day()+"-"+hour()+"-"+minute()+"-"+second()+".png");
+    save("Outputs/gapSpiral"+year()+month()+day()+hour()+minute()+"-"+second());
+  }
+}
+void staticImage(){
+  float reduction=reductionStart;
   for(int i =0;i<20;i++){
     arc(width/2,height/2,(width/2)/(reduction*reduction),(height/2)/(reduction*reduction), -i*radInc, 2*PI-(i+1)*radInc-.2);
     reduction*=reductionMultiplier;
-    
   }
-  save("walker"+dateFormat.format(date)+".png");
-  save("perlinWalker"+dateFormat.format(date));
+  save("Outputs/gapSpiral"+year()+month()+day()+hour()+minute()+"-"+second()+".png");
+  save("Outputs/gapSpiral"+year()+month()+day()+hour()+minute()+"-"+second());
 }
-void Draw(){
-  noLoop();
-}
-
-//void keyPressed(){
-//  if(key==' '){
-//  DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-//  //get current date time with Date()
-//  Date date = new Date();
-//    save("walker"+dateFormat.format(date)+".png");
-//    save("perlinWalker"+dateFormat.format(date));
- 
-//  }
-//}
