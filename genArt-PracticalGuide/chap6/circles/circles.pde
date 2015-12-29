@@ -1,15 +1,33 @@
+//Interacting circle objects.
+
+//Controls:
+//  s:     Toggle Drawing Circles
+//  space: remove all circles
+//  click: add circles
+//  0,1:   change interaction style
+
+//This is based on code "Generative Art; A practical guide using processing" by matt pearson
+//http://zenbullets.com/book.php
+
+//Author Ian Hunt-Isaak
+//ianhi.github.io
+//ianhuntisaak [atNOSPAM] gmail.com
+
+
 int _num = 5;
 Circle[] _circleArr = {};
 boolean _drawCircles=true;
+int _connectionStyle=1;
 
 void setup() {
-  size(1200, 800);
+  size(800, 800);
   background(255);
   smooth();
   strokeWeight(1);
   fill(150, 50);
   drawCircles();
   textSize(32);
+  frameRate(24);
 }
 void draw() {
   background(255);
@@ -30,6 +48,14 @@ void keyPressed() {
     break;
   case ENTER:
     _drawCircles = !_drawCircles;
+    break;
+  case 's':
+    save("Outputs/circles"+"-"+year()+"-"+month()+"-"+day()+"-"+hour()+"-"+minute()+"-"+second()+".png");
+    save("Outputs/circles"+"-"+year()+"-"+month()+"-"+day()+"-"+hour()+"-"+minute()+"-"+second());
+    break;
+  }
+  if(Character.isDigit(key)){
+    _connectionStyle=int(key)-48;
   }
 }
   void drawCircles() {
@@ -62,6 +88,7 @@ class Circle {
     fill(fillcol, alpha);
     ellipse(x, y, radius*2, radius*2);
     stroke(linecol, 150);
+    strokeWeight(1);
     noFill();
     ellipse(x, y, 10, 10);
   }
@@ -80,13 +107,8 @@ class Circle {
         float overlap = distance-radius-other.radius;
         if (overlap<0) {
           touching=true;
-          float midx, midy;
-          midx = (x+other.x)/2;
-          midy = (y+other.y)/2;
-          stroke(0, 100);
-          noFill();
           overlap*=-1;
-          ellipse(midx, midy, overlap, overlap);
+          drawConnection(x,y,other.x,other.y,fillcol,overlap);
         }
       }
     }
@@ -94,5 +116,27 @@ class Circle {
       alpha--;
     } else alpha = startAlpha + (startAlpha+alpha)/3;
     if(_drawCircles) drawMe();
+  }
+}
+void drawConnection(float x1,float y1,float x2,float y2,color fillCol,float overlap){
+  float midx, midy;
+  midx = (x1+x2)/2;
+  midy = (y1+y2)/2;
+  switch(_connectionStyle){
+    case 0: 
+      stroke(0,100);
+      noFill();
+      ellipse(midx,midy,overlap,overlap);
+      break;
+    case 1:
+      stroke(fillCol);
+      pushMatrix();
+      translate(x1,y1);
+      float angle = atan2(y2-y1,x2-x1);
+      rotate(angle);
+      strokeWeight(10);
+      line(0,0,dist(x1,y1,x2,y2),0);
+      popMatrix();
+      break;
   }
 }
