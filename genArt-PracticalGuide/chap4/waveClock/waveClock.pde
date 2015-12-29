@@ -1,3 +1,7 @@
+//based on Wave Clock http://abandonedart.org/?p=276
+//I am following "Generative Art; A practical guide using processing" by matt pearson
+//http://zenbullets.com/book.php
+
 //Author Ian Hunt-Isaak
 //ianhi.github.io
 //ianhuntisaak [atNOSPAM] gmail.com
@@ -25,8 +29,8 @@ void setup(){
   _radius=((height+width)/2)/3;
   stroke(_alpha,60);
   frameRate(30);
-
 }
+
 void draw(){
   _alpha= map(noise(_alphaNoise),0,1,0,255);
   stroke(_alpha,60);
@@ -62,5 +66,7 @@ void keyPressed(){
     save("Outputs/waveClock-"+year()+"-"+month()+"-"+day()+"-"+hour()+"-"+minute()+"-"+second());
     save("Outputs/waveClock-"+year()+"-"+month()+"-"+day()+"-"+hour()+"-"+minute()+"-"+second()+".png");
   }
-
+}
+void mousePressed() { 
+  background(255);
 }
