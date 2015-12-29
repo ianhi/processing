@@ -30,16 +30,21 @@ void draw(){
   background(0);
   float reduction=reductionStart;
   for(int i =0;i<20;i++){
-    arc(width/2,height/2,(width/2)/(reduction*reduction),(height/2)/(reduction*reduction), (-i*radInc+phaseShift), 2*PI-(i+1)*radInc-.2+phaseShift);
+    //arc(width/2,height/2,(width/2)/(reduction*reduction),(height/2)/(reduction*reduction), (-i*radInc+phaseShift), 2*PI-(i+1)*radInc-.2+phaseShift);
     
     //Below are several other styles of animation. They're ordered by which i like the best
     
-    //arc(width/2,height/2,(width/2)/(reduction*reduction),(height/2)/(reduction*reduction), (-i*radInc-phaseShift)%TWO_PI, abs(2*PI-(i+1)*radInc-.2+phaseShift)%TWO_PI);
-    //arc(width/2,height/2,(width/2)/(reduction*reduction),(height/2)/(reduction*reduction), (-i*radInc+phaseShift)%TWO_PI, abs(2*PI-(i+1)*radInc-.2-phaseShift)%TWO_PI);
+   if(abs(-i*radInc-phaseShift)<abs(2*PI-(i+1)*radInc-.2+phaseShift)){
+   arc(width/2,height/2,(width/2)/(reduction*reduction),(height/2)/(reduction*reduction), abs(-i*radInc-phaseShift)%TWO_PI, abs(2*PI-(i+1)*radInc-.2+phaseShift)%TWO_PI);
+   }
+   else{
+        arc(width/2,height/2,(width/2)/(reduction*reduction),(height/2)/(reduction*reduction), abs(2*PI-(i+1)*radInc-.2+phaseShift),abs(-i*radInc-phaseShift));
+   }
+   //arc(width/2,height/2,(width/2)/(reduction*reduction),(height/2)/(reduction*reduction), (-i*radInc+phaseShift)%TWO_PI, abs(2*PI-(i+1)*radInc-.2-phaseShift)%TWO_PI);
     //arc(width/2,height/2,(width/2)/(reduction*reduction),(height/2)/(reduction*reduction), abs(-i*radInc+phaseShift), abs(2*PI-(i+1)*radInc-.2-phaseShift));
   reduction*=reductionMultiplier;
   }
-  phaseShift+=-.001*PI;
+  phaseShift+=-.01*PI;
 }
 void keyPressed(){
   if(key=='s'){
