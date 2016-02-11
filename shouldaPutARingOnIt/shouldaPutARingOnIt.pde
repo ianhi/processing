@@ -6,12 +6,12 @@ int currentRing = 0;
 boolean rand=false;
 
 void setup() {
-  //size(600, 600);
+  size(600, 600);
   rings = new Ring[numRings]; // Create the array
   for (int i = 0; i < rings.length; i++) {
     rings[i] = new Ring(); // Create each object
   }
-  fullScreen();
+  //fullScreen();
 }
 void draw() {
   background(0);

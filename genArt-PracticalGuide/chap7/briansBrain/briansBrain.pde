@@ -82,7 +82,6 @@ class Cell{
     y=why*_cellSize;
     
     nextState=round(random(2));
-    println(nextState);
     state=nextState;
     
     neighbors=new Cell[0];

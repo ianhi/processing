@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  	<head>
+		<script src="processing-1.4.1.min.js"></script>
+		<script>
+			function changeColor(id, num) {
+				var pjs = Processing.getInstanceById(id);
+				pjs.setColor(num);
+			}
+		</script>
+	</head>
+	<body>
+		<p>
+			<span onclick="changeColor('circleSketch',1)">Red</span> 
+			<span onclick="changeColor('circleSketch',2)">Green</span> 
+			<span onclick="changeColor('circleSketch',3)">Blue</span>
+		</p>
+		<p>
+			<canvas id="circleSketch" data-processing-sources="hello-web.pde"></canvas>
+		</p>
+	</body>
+</html>

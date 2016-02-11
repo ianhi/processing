@@ -12,8 +12,8 @@ int _numChildren=3;
 Branch _trunk,_trunk2;
 
 void setup(){
-  //size(750,800);
-  fullScreen();
+  size(750,800);
+  //fullScreen();
   background(255);
   noFill();
   smooth();
